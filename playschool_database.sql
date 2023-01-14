@@ -142,6 +142,7 @@ CREATE TABLE StdCovid(
 	csDate DATE ,
     stdMKN CHAR(12),
     csStatus BOOLEAN NOT NULL DEFAULT 0, -- 0 for no covid and 1 for get covid 
+    csRTK VARCHAR(40), -- RTK result image
     CONSTRAINT stdCovid_pk PRIMARY KEY(csDate, stdMKN)
     
 );
@@ -152,7 +153,9 @@ CREATE TABLE AttendanceStd(
 	attDate DATE ,    
     stdMKN CHAR(12),
     attReason VARCHAR(255),
-    attTemparature DECIMAL(3, 1) NOT NULL,
+    attTemperature DECIMAL(3, 1) NOT NULL,
+    attExpect BOOLEAN NOT NULL DEFAULT 1, -- 0 for not absent, 1 for present
+    attConfirm BOOLEAN NOT NULL DEFAULT 1, -- 0 for not absent, 1 for present
     CONSTRAINT AttendanceStd_pk PRIMARY KEY(attDate, stdMKN)
 );
 
@@ -161,7 +164,8 @@ CREATE TABLE AttendanceTeac(
 	attDate DATE , 
     tIC CHAR(12) ,
     attReason VARCHAR(255),
-    attTemparature DECIMAL(3, 1) NOT NULL,
+    attTemperature DECIMAL(3, 1) NOT NULL,
+    attStatus BOOLEAN NOT NULL DEFAULT 1, -- 0 for not absent, 1 for present
     CONSTRAINT AttendanceTeac_pk PRIMARY KEY(attDate, tIC)
 );
 
@@ -279,11 +283,11 @@ CREATE TABLE Announcement(
 DROP TABLE IF EXISTS PicAnn;
 CREATE TABLE PicAnn(
 	
-    picId INT AUTO_INCREMENT,
+    picID INT AUTO_INCREMENT,
     annPic VARCHAR(100) NOT NULL,
     annID INT NOT NULL,
     
-    CONSTRAINT PicAnn PRIMARY KEY(picId)
+    CONSTRAINT PicAnn PRIMARY KEY(picID)
 );
 
 DROP TABLE IF EXISTS Activity;
